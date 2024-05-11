@@ -52,7 +52,7 @@ export const login = async (
     });
     req.session.token = token; // Store JWT in session
 
-    res.status(200).send({ message: "Login successful" });
+    res.status(200).send({ message: "Login successful", token });
   } catch (error) {
     next(error);
   }

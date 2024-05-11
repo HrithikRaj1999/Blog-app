@@ -19,8 +19,8 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET!,
     resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true, httpOnly: true },
+    saveUninitialized: true, 
+    cookie: { secure: false }
   })
 );
 app.use(morgan("dev"));
@@ -33,5 +33,5 @@ app.get("/", serverStatus);
 app.use("/api/auth", authRouter);
 app.use(authenticate);
 app.use("/api/blog", blogRouter);
-app.use("/api/superadmin", superAdminRouter);
+app.use("/api/super-admin", superAdminRouter);
 app.use(handleAllError);

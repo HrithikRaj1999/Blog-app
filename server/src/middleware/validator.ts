@@ -5,12 +5,8 @@ export const validateSignup = [
   body("name").notEmpty().withMessage("Name is required"),
   body("email").isEmail().withMessage("Must be a valid email address"),
   body("password")
-    .isLength({ min: 6 })
+    .isLength({ min: 6})
     .withMessage("Password must be at least 6 characters long"),
-  body("role")
-    .optional()
-    .isIn(["user", "admin"])
-    .withMessage("Invalid role specified"),
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
