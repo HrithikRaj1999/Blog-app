@@ -1,18 +1,54 @@
-import React from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { signOut } from "../authentication/authSlice";
+import { RootState } from "../store/store";
+import { Link, useNavigate } from "react-router-dom";
+import { signOutFromServer } from "../services/authService";
 
-const ResponsiveNavbar  = () => {
+const ResponsiveNavbar = () => {
+  const user = useSelector((state: RootState) => state.auth.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      await signOutFromServer();
+      dispatch(signOut());
+      navigate("/login");
+    } catch (error) {
+      console.error("Sign-out failed", error);
+    }
+  };
+
   return (
-    <Navbar bg="light" expand="lg" sticky="top">
+    <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
       <Container>
-        <Navbar.Brand href="#home">My App</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <Nav.Link href="#about">About</Nav.Link>
-            <Nav.Link href="#services">Services</Nav.Link>
+        <Navbar.Brand as={Link} to="/">
+          Blogify
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="ms-auto">
+            <Nav.Link as={Link} to="/blog">
+              All Blogs
+            </Nav.Link>
+            <Nav.Link as={Link} to="/about">
+              About
+            </Nav.Link>
+            {user ? (
+              <NavDropdown title={user.name} id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to="/dashboard">
+                  Dashboard
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={handleLogout}>
+                  Signout
+                </NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <Nav.Link as={Link} to="/login">
+                Login
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -20,4 +56,4 @@ const ResponsiveNavbar  = () => {
   );
 };
 
-export default ResponsiveNavbar ;
+export default ResponsiveNavbar;

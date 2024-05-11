@@ -13,6 +13,7 @@ import superAdminRouter from "./src/router/superAdmin.router";
 dotenv.config();
 const app: Express = express();
 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
@@ -20,7 +21,12 @@ app.use(
     secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false },
+    cookie: {
+      secure: false, // Set to true if using HTTPS, especially with sameSite: 'None'
+      httpOnly: true,
+      maxAge: 3600000,
+      sameSite: 'lax', // Or 'None' if necessary
+    },
   })
 );
 app.use(morgan("dev"));
@@ -32,6 +38,9 @@ app.get("/", serverStatus);
 
 app.use("/api/auth", authRouter);
 
+//user must be authenticated
+app.use(authenticate);
+
 app.use("/api/blog", blogRouter);
-app.use("/api/super-admin", authenticate, superAdminRouter);
+app.use("/api/super-admin", superAdminRouter);
 app.use(handleAllError);

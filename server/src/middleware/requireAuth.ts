@@ -8,8 +8,9 @@ export const authenticate = (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.session.token; // Assuming JWT token is stored in the session
-
+  const token = req.session.token; 
+  console.log("Session ID (logout):", req.sessionID);
+  console.log("Session (logout):", req.session);
   if (!token) {
     return res.status(401).json({ message: "Unauthorized: No token provided" });
   }

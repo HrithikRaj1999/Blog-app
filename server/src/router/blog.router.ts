@@ -13,9 +13,9 @@ import { authenticate } from "../middleware/requireAuth";
 
 const blogRouter = express.Router();
 
-blogRouter.post("/", authenticate, createNewBlog);
-blogRouter.patch("/:id", authenticate, updateBlog);
-blogRouter.delete("/:id", authenticate, isAdmin, deleteBlog);
+blogRouter.post("/", createNewBlog);
+blogRouter.patch("/:id", updateBlog);
+blogRouter.delete("/:id", isAdmin, deleteBlog);
 blogRouter.get("/:id", fetchSingleBlog);
 blogRouter.get("/", fetchAllBlogs);
 

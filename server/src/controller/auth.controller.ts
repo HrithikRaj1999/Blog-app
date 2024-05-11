@@ -51,14 +51,16 @@ export const login = async (
       expiresIn: JWT_EXPIRATION,
     });
     req.session.token = token; // Store JWT in session
-
-    res.status(200).send({ message: "Login successful", token });
+    console.log("Session ID (login):", req.sessionID);
+    console.log("Session (login):", req.session);
+    res.status(200).send({ message: "Login successful", user });
   } catch (error) {
     next(error);
   }
 };
 
 export const signout = (req: Request, res: Response, next: NextFunction) => {
+ 
   req.session.destroy((err) => {
     if (err) {
       return next(err); // Pass error to the error-handling middleware
