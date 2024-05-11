@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ErrorHandler } from "../types/ErrorHandler-type";
 import BlogModel from "../model/blog.model";
+import UserModel from "../model/user.model";
 
 export const createNewBlog = async (
   req: Request,
@@ -8,8 +9,8 @@ export const createNewBlog = async (
   next: NextFunction
 ) => {
   try {
-    const { heading, author, description, createdBy } = req.body;
-    if (!heading || !author || !createdBy) {
+    const { heading, author, description } = req.body;
+    if (!heading || !author) {
       return next(new ErrorHandler(400, "Please fill all required fields"));
     }
 
@@ -17,7 +18,7 @@ export const createNewBlog = async (
       heading,
       author,
       description,
-      createdBy,
+      createdBy: req.user?.userId,
     });
     return res.status(201).json(newBlog);
   } catch (error) {
@@ -33,6 +34,7 @@ export const updateBlog = async (
 ) => {
   const { id } = req.params;
   const { heading, author, description, createdBy } = req.body;
+  const userId = req?.user?.userId;
 
   if (!heading && !author && !description && !createdBy) {
     return next(
@@ -41,15 +43,24 @@ export const updateBlog = async (
   }
 
   try {
+    // First, find the blog post to verify the owner
+    const blog = await BlogModel.findById(id);
+    if (!blog) {
+      return next(new ErrorHandler(404, "Blog post not found"));
+    }
+
+    // Check if the logged-in user is the creator of the blog post
+    if (blog.createdBy.toString() !== userId) {
+      return next(
+        new ErrorHandler(403, "Unauthorized: Cannot edit this blog post")
+      );
+    }
+
     const updatedBlog = await BlogModel.findByIdAndUpdate(
       id,
       { heading, author, description, createdBy },
       { new: true }
     );
-
-    if (!updatedBlog) {
-      return next(new ErrorHandler(404, "Blog post not found"));
-    }
 
     res.status(200).json(updatedBlog);
   } catch (error) {
@@ -57,7 +68,7 @@ export const updateBlog = async (
   }
 };
 
-// Delete a blog post
+//  delete a blog post
 export const deleteBlog = async (
   req: Request,
   res: Response,

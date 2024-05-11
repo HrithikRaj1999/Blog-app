@@ -19,8 +19,8 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET!,
     resave: false,
-    saveUninitialized: true, 
-    cookie: { secure: false }
+    saveUninitialized: true,
+    cookie: { secure: false },
   })
 );
 app.use(morgan("dev"));
@@ -31,7 +31,7 @@ ConnectMongoDb(app);
 app.get("/", serverStatus);
 
 app.use("/api/auth", authRouter);
-app.use(authenticate);
+
 app.use("/api/blog", blogRouter);
-app.use("/api/super-admin", superAdminRouter);
+app.use("/api/super-admin", authenticate, superAdminRouter);
 app.use(handleAllError);

@@ -9,12 +9,13 @@ import {
   fetchAllBlogs,
 } from "../controller/blog.controller";
 import { isAdmin } from "../middleware/isAdmin";
+import { authenticate } from "../middleware/requireAuth";
 
 const blogRouter = express.Router();
 
-blogRouter.post("/", createNewBlog);
-blogRouter.put("/:id", updateBlog);
-blogRouter.delete("/:id", isAdmin, deleteBlog);
+blogRouter.post("/", authenticate, createNewBlog);
+blogRouter.patch("/:id", authenticate, updateBlog);
+blogRouter.delete("/:id", authenticate, isAdmin, deleteBlog);
 blogRouter.get("/:id", fetchSingleBlog);
 blogRouter.get("/", fetchAllBlogs);
 
