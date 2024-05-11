@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ErrorHandler } from "../types/ErrorHandler-type";
-import blogModel from "../model/blog.model";
+import BlogModel from "../model/blog.model";
 
 export const createNewBlog = async (
   req: Request,
@@ -13,7 +13,12 @@ export const createNewBlog = async (
       return next(new ErrorHandler(400, "Please fill all required fields"));
     }
 
-    const newBlog = await blogModel.create({ heading, author, description, createdBy });
+    const newBlog = await BlogModel.create({
+      heading,
+      author,
+      description,
+      createdBy,
+    });
     return res.status(201).json(newBlog);
   } catch (error) {
     next(new ErrorHandler(500, "Server Error: Unable to create blog post"));
@@ -30,11 +35,13 @@ export const updateBlog = async (
   const { heading, author, description, createdBy } = req.body;
 
   if (!heading && !author && !description && !createdBy) {
-    return next(new ErrorHandler(400, "Please provide at least one field to update"));
+    return next(
+      new ErrorHandler(400, "Please provide at least one field to update")
+    );
   }
 
   try {
-    const updatedBlog = await blogModel.findByIdAndUpdate(
+    const updatedBlog = await BlogModel.findByIdAndUpdate(
       id,
       { heading, author, description, createdBy },
       { new: true }
@@ -59,7 +66,7 @@ export const deleteBlog = async (
   const { id } = req.params;
 
   try {
-    const deletedBlog = await blogModel.findByIdAndDelete(id);
+    const deletedBlog = await BlogModel.findByIdAndDelete(id);
 
     if (!deletedBlog) {
       return next(new ErrorHandler(404, "Blog post not found"));
@@ -80,7 +87,7 @@ export const fetchSingleBlog = async (
   const { id } = req.params;
 
   try {
-    const blog = await blogModel.findById(id).populate('createdBy');
+    const blog = await BlogModel.findById(id).populate("createdBy");
 
     if (!blog) {
       return next(new ErrorHandler(404, "Blog post not found"));
@@ -106,7 +113,7 @@ export const fetchAllBlogs = async (
   }
 
   try {
-    const blogs = await blogModel.find(query).populate('createdBy');
+    const blogs = await BlogModel.find(query).populate("createdBy");
     res.status(200).json(blogs);
   } catch (error) {
     next(new ErrorHandler(500, "Server Error: Unable to retrieve blog posts"));

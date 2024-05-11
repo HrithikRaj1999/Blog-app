@@ -16,5 +16,5 @@ const blogSchema = new Schema<BlogType>(
   },
   { timestamps: true }
 );
-
-export default model<BlogType>("Blog", blogSchema);
+const BlogModel = model<BlogType>("Blog", blogSchema);
+export default BlogModel;

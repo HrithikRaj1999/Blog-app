@@ -6,18 +6,14 @@ import UserModel from "../model/user.model";
 const JWT_SECRET = process.env.JWT_SECRET!;
 const JWT_EXPIRATION = process.env.JWT_EXPIRATION!;
 
-export const signup = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const { name, email, password } = req.body;
+export const signup = async (req: Request, res: Response, next: NextFunction) => {
+  const { name, email, password, role = 'user' } = req.body;  // Assuming default role is 'user'
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new UserModel({ name, email, password: hashedPassword });
+    const newUser = new UserModel({ name, email, password: hashedPassword, role });
     await newUser.save();
-    const token = jwt.sign({ userId: newUser._id }, JWT_SECRET, {
+    const token = jwt.sign({ userId: newUser._id, role: newUser.role }, JWT_SECRET, {
       expiresIn: JWT_EXPIRATION,
     });
     req.session.token = token; // Store JWT in session
@@ -27,12 +23,7 @@ export const signup = async (
     next(error);
   }
 };
-
-export const login = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const login = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
 
   try {
@@ -44,7 +35,7 @@ export const login = async (
     if (!passwordMatch)
       return res.status(401).send({ message: "Authentication failed" });
 
-    const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
       expiresIn: JWT_EXPIRATION,
     });
     req.session.token = token; // Store JWT in session
