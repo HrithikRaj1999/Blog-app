@@ -1,8 +1,19 @@
 import express from "express";
-import { login, signout, signup } from "../controller/auth.controller";
+import {
+  login,
+  resetPassword,
+  signout,
+  signup,
+} from "../controller/auth.controller";
+import {
+  validateLogin,
+  validatePasswordReset,
+  validateSignup,
+} from "../middleware/validator";
 const authRouter = express.Router();
 
-authRouter.post("/signup", signup);
-authRouter.post("/login", login);
+authRouter.post("/signup", validateSignup, signup);
+authRouter.post("/login", validateLogin, login);
 authRouter.post("/signout", signout);
+authRouter.post("/reset-password", validatePasswordReset, resetPassword);
 export default authRouter;

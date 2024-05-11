@@ -9,6 +9,7 @@ import session from "express-session";
 import blogRouter from "./src/router/blog.router";
 import { authenticate } from "./src/middleware/requireAuth";
 import authRouter from "./src/router/auth.router";
+import superAdminRouter from "./src/router/superAdmin.router";
 dotenv.config();
 const app: Express = express();
 
@@ -30,6 +31,7 @@ ConnectMongoDb(app);
 app.get("/", serverStatus);
 
 app.use("/api/auth", authRouter);
-app.use("/api/blog", authenticate, blogRouter);
-
+app.use(authenticate);
+app.use("/api/blog", blogRouter);
+app.use("/api/superadmin", superAdminRouter);
 app.use(handleAllError);

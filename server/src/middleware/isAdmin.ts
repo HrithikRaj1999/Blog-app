@@ -9,3 +9,19 @@ export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
 
   next(); // User is an admin, proceed to the next middleware or route handler
 };
+
+export const isSuperAdmin = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = (req as any).user; // Retrieve the decoded user info added by the authenticate middleware
+
+  if (!user || user.role !== "super-admin") {
+    return res
+      .status(403)
+      .json({ message: "Forbidden: Super administrator only" });
+  }
+
+  next(); // User is an isSuperAdmin, proceed to the next middleware or route handler
+};
