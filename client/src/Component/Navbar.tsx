@@ -28,7 +28,7 @@ const ResponsiveNavbar = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/blog">
+            <Nav.Link as={Link} to="/secure/blog">
               All Blogs
             </Nav.Link>
             <Nav.Link as={Link} to="/about">
@@ -36,7 +36,7 @@ const ResponsiveNavbar = () => {
             </Nav.Link>
             {user ? (
               <NavDropdown title={user.name} id="basic-nav-dropdown">
-                <NavDropdown.Item as={Link} to="/dashboard">
+                <NavDropdown.Item as={Link} to="/secure/dashboard">
                   Dashboard
                 </NavDropdown.Item>
                 <NavDropdown.Divider />

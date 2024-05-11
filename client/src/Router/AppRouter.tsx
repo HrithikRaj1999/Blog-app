@@ -8,6 +8,7 @@ import SignupPage from "../Pages/Signup";
 import LoginRequiredRoute from "../Component/LoginRequiredRoute";
 import BlogDetails from "../Pages/BlogDetails";
 import Dashboard from "../Component/Dashboard";
+import AllBlogsPage from "../Pages/AllBlogs";
 
 // // Lazy load the route-specific components
 // const LoginPage = React.lazy(() => import("../Pages/Login"));
@@ -34,6 +35,7 @@ const appRouter = createBrowserRouter([
         children: [
           { path: "blog-details/:blogid", element: <BlogDetails /> },
           { path: "dashboard", element: <Dashboard /> },
+          { path: "blog", element: <AllBlogsPage /> },
         ],
       },
 

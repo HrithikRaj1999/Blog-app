@@ -19,7 +19,8 @@ export const authenticateUser =
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/auth/${urlPath}`,
-        credentials
+        credentials,
+        {withCredentials: true}
       );
       if (response.status === 200) {
         if (urlPath === "login") {
@@ -37,7 +38,7 @@ export const authenticateUser =
   };
 export const signOutFromServer = async () => {
   try {
-    const response = await axios.post(
+    const response = await axios.get(
       `${process.env.REACT_APP_SERVER_URL}/auth/signout`,
       { withCredentials: true }
     );

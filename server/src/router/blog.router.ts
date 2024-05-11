@@ -9,7 +9,6 @@ import {
   fetchAllBlogs,
 } from "../controller/blog.controller";
 import { isAdmin } from "../middleware/isAdmin";
-import { authenticate } from "../middleware/requireAuth";
 
 const blogRouter = express.Router();
 

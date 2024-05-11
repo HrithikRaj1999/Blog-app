@@ -50,9 +50,9 @@ export const login = async (
     const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
       expiresIn: JWT_EXPIRATION,
     });
-    req.session.token = token; // Store JWT in session
-    console.log("Session ID (login):", req.sessionID);
-    console.log("Session (login):", req.session);
+    req.session.token = token;
+    console.log("Session ID (sign IN):", req.sessionID);
+    console.log("Session (sign IN):", req.session);
     res.status(200).send({ message: "Login successful", user });
   } catch (error) {
     next(error);
@@ -60,13 +60,11 @@ export const login = async (
 };
 
 export const signout = (req: Request, res: Response, next: NextFunction) => {
- 
   req.session.destroy((err) => {
     if (err) {
-      return next(err); // Pass error to the error-handling middleware
+      return next(err); 
     }
-
-    res.clearCookie("connect.sid", { path: "/" }); // Clear the session cookie
+    res.clearCookie("SESSION", { path: "/" });
     res.status(200).send({ message: "Signout successful" });
   });
 };
@@ -77,7 +75,6 @@ export const resetPassword = async (
   next: NextFunction
 ) => {
   const { userId, password } = req.body; // confirmPassword is checked by express-validator now
-
   try {
     const user = await UserModel.findById(userId);
     if (!user) {

@@ -9,6 +9,7 @@ export const authenticate = (
   next: NextFunction
 ) => {
   const token = req.session.token; 
+  
   console.log("Session ID (logout):", req.sessionID);
   console.log("Session (logout):", req.session);
   if (!token) {

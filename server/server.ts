@@ -13,24 +13,30 @@ import superAdminRouter from "./src/router/superAdmin.router";
 dotenv.config();
 const app: Express = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["POST", "PUT", "PATCH", "GET", "DELETE", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 app.use(
   session({
+    name: "SESSION",
     secret: process.env.SESSION_SECRET!,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
-      secure: false, // Set to true if using HTTPS, especially with sameSite: 'None'
-      httpOnly: true,
-      maxAge: 3600000,
-      sameSite: 'lax', // Or 'None' if necessary
+      sameSite: false,
+      httpOnly: false,
+      secure: false,
     },
   })
 );
 app.use(morgan("dev"));
-app.use(cors());
 
 ConnectMongoDb(app);
 

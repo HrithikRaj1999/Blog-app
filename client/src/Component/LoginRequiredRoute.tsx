@@ -1,10 +1,11 @@
+import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { RootState } from "../store/store";
 
 export default function LoginRequiredRoute() {
-  const user = { isLoggedIn: "true" };
+  const userData = useSelector((state: RootState) => state.auth);
   const location = useLocation();
-  if (!user || !user.isLoggedIn) {
-    // Redirect them to the login page, but save the current location they were trying to go to
+  if (!userData.isLoggedIn || !userData.user) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
   return <Outlet />;
