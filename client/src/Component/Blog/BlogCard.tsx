@@ -1,4 +1,3 @@
-// BlogCard.tsx
 import { Button, Card, Col } from "react-bootstrap";
 import { Blog } from "../../Types";
 import DeleteConfirmation from "./DeleteConfirmation";
@@ -89,6 +88,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
         onHide={() => setShowDeleteModal(false)}
         handleDelete={handleDelete}
       />
+      
     </>
   );
 };

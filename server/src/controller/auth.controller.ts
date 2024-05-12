@@ -51,8 +51,6 @@ export const login = async (
       expiresIn: JWT_EXPIRATION,
     });
     req.session.token = token;
-    console.log("Session ID (sign IN):", req.sessionID);
-    console.log("Session (sign IN):", req.session);
     res.status(200).send({ message: "Login successful", user });
   } catch (error) {
     next(error);

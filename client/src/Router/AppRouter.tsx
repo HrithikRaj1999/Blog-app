@@ -1,13 +1,14 @@
-import React, { Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import ErrorPage from "../Pages/ErrorPage";
 import Layout from "../Component/Layout";
 import LoginRequiredRoute from "../Component/LoginRequiredRoute";
+import CenteredSpinner from "../Component/CenteredSpinner";
 
 const LoginPage = lazy(() => import("../Pages/Login"));
 const SignupPage = lazy(() => import("../Pages/Signup"));
 const Dashboard = lazy(() => import("../Component/Dashboard/Dashboard"));
-const Welcome = lazy(() => import("../Component/Dashboard/Welcome"));
+const Welcome = lazy(() => import("../Component/Welcome"));
 const MakeBlog = lazy(() => import("../Component/Blog/MakeBlog"));
 const Home = lazy(() => import("../Pages/Home"));
 const ShowOwnBlog = lazy(() => import("../Component/Blog/ShowOwnBlog"));
@@ -30,7 +31,7 @@ const appRouter = createBrowserRouter([
       {
         index: true,
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<CenteredSpinner />}>
             <Home />
           </Suspense>
         ),
@@ -38,7 +39,7 @@ const appRouter = createBrowserRouter([
       {
         path: "login",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<CenteredSpinner />}>
             <LoginPage />
           </Suspense>
         ),
@@ -46,7 +47,7 @@ const appRouter = createBrowserRouter([
       {
         path: "signup",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<CenteredSpinner />}>
             <SignupPage />
           </Suspense>
         ),
@@ -54,7 +55,7 @@ const appRouter = createBrowserRouter([
       {
         path: "about",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<CenteredSpinner />}>
             <AboutPage />
           </Suspense>
         ),
@@ -66,7 +67,7 @@ const appRouter = createBrowserRouter([
           {
             path: "dashboard",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<CenteredSpinner />}>
                 <Dashboard />
               </Suspense>
             ),
@@ -74,7 +75,7 @@ const appRouter = createBrowserRouter([
               {
                 path: "edit-profile",
                 element: (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<CenteredSpinner />}>
                     <EditProfile />
                   </Suspense>
                 ),
@@ -82,7 +83,7 @@ const appRouter = createBrowserRouter([
               {
                 path: "user/create-blog",
                 element: (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<CenteredSpinner />}>
                     <MakeBlog />
                   </Suspense>
                 ),
@@ -90,7 +91,7 @@ const appRouter = createBrowserRouter([
               {
                 path: "user/show-own-blog",
                 element: (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<CenteredSpinner />}>
                     <ShowOwnBlog />
                   </Suspense>
                 ),
@@ -98,7 +99,7 @@ const appRouter = createBrowserRouter([
               {
                 path: "user/edit-blog",
                 element: (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<CenteredSpinner />}>
                     <EditBlog />
                   </Suspense>
                 ),
@@ -106,7 +107,7 @@ const appRouter = createBrowserRouter([
               {
                 path: "admin/expose-all",
                 element: (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<CenteredSpinner />}>
                     <AllUsersAndBlogs />
                   </Suspense>
                 ),
@@ -114,7 +115,7 @@ const appRouter = createBrowserRouter([
               {
                 index: true,
                 element: (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<CenteredSpinner />}>
                     <Welcome />
                   </Suspense>
                 ),
@@ -124,7 +125,7 @@ const appRouter = createBrowserRouter([
           {
             path: "blog",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<CenteredSpinner />}>
                 <Home />
               </Suspense>
             ),
