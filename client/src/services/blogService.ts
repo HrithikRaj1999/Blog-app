@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_ROUTES } from "../Router/BlogRoute";
+import { BLOG_API_ROUTES } from "../Router/BlogRoute";
 import { Blog } from "../Types";
 import { AppDispatch } from "../store/store";
 import {
@@ -15,7 +15,7 @@ export const createBlog =
   (blogData: Partial<Blog>) => async (dispatch: AppDispatch) => {
     dispatch(requestBlogStart());
     try {
-      const response = await axios.post(API_ROUTES.CREATE_BLOG, blogData, {
+      const response = await axios.post(BLOG_API_ROUTES.CREATE_BLOG, blogData, {
         withCredentials: true,
       });
       if (response.status === 201) {
@@ -38,7 +38,7 @@ export const updateBlog =
   (id: string, blogData: Partial<Blog>) => async (dispatch: AppDispatch) => {
     dispatch(requestBlogStart());
     try {
-      const response = await axios.patch(API_ROUTES.UPDATE_BLOG(id), blogData, {
+      const response = await axios.patch(BLOG_API_ROUTES.UPDATE_BLOG(id), blogData, {
         withCredentials: true,
       });
       if (response.status === 200) {
@@ -59,7 +59,7 @@ export const updateBlog =
 // Delete a blog by ID
 export const deleteBlog = async (id: string) => {
   try {
-    const response = await axios.delete(API_ROUTES.DELETE_BLOG(id), {
+    const response = await axios.delete(BLOG_API_ROUTES.DELETE_BLOG(id), {
       withCredentials: true,
     });
     return response.data;
@@ -72,7 +72,7 @@ export const deleteBlog = async (id: string) => {
 // Fetch a single blog by ID
 export const fetchSingleBlog = async (id: string) => {
   try {
-    const response = await axios.get(API_ROUTES.FETCH_SINGLE_BLOG(id), {
+    const response = await axios.get(BLOG_API_ROUTES.FETCH_SINGLE_BLOG(id), {
       withCredentials: true,
     });
     return response.data;
@@ -85,7 +85,7 @@ export const fetchSingleBlog = async (id: string) => {
 // Fetch all blogs
 export const fetchAllBlogs = async () => {
   try {
-    const response = await axios.get(API_ROUTES.FETCH_ALL_BLOGS, {
+    const response = await axios.get(BLOG_API_ROUTES.FETCH_ALL_BLOGS, {
       withCredentials: true,
     });
     return response.data;

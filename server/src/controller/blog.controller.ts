@@ -32,6 +32,7 @@ export const updateBlog = async (
   next: NextFunction
 ) => {
   const { id } = req.params;
+  //author name is not restricted to login user only can be any thing maybe anonymous also
   const { heading, author, description, createdBy } = req.body;
   const userId = req?.user?.userId;
 

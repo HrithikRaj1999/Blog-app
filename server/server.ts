@@ -10,6 +10,7 @@ import blogRouter from "./src/router/blog.router";
 import { authenticate } from "./src/middleware/requireAuth";
 import authRouter from "./src/router/auth.router";
 import superAdminRouter from "./src/router/superAdmin.router";
+import userRouter from './src/router/user.route';
 dotenv.config();
 const app: Express = express();
 
@@ -48,5 +49,7 @@ app.use("/api/auth", authRouter);
 app.use(authenticate);
 
 app.use("/api/blog", blogRouter);
+app.use("/api/user", userRouter);
+
 app.use("/api/super-admin", superAdminRouter);
 app.use(handleAllError);

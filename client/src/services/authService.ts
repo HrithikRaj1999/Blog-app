@@ -49,3 +49,4 @@ export const signOutFromServer = async () => {
     throw error;
   }
 };
+

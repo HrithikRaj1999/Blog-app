@@ -7,10 +7,14 @@ import { updateBlog } from "../../services/blogService";
 import { Blog } from "../../Types";
 
 const EditBlog = () => {
+  
   const location = useLocation();
   const initData = location.state;
   const [show, setShow] = useState(true);
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    navigate("/secure/dashboard/show-own-blog");
+    setShow(false);
+  };
   const handleShow = () => setShow(true);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const dispatch = useDispatch();

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Button, Modal, Form, Container } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { EditProfileForm, User } from "../../Types";
+import { EditProfileForm } from "../../Types";
 import PasswordInputWithToggle from "../PasswordInput";
 import { validateEditUserForm } from "../../helper/util";
+import { updateUserProfile } from "../../services/userService";
 
 const EditProfile = () => {
   const userData = useSelector((state: RootState) => state.auth.user);
@@ -20,7 +21,7 @@ const EditProfile = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  const dispatch = useDispatch();
   // Unified input handler
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,9 +29,10 @@ const EditProfile = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateEditUserForm(formData, setErrors)) {
+      dispatch(updateUserProfile(userData?._id!, formData) as any);
       handleClose();
     }
   };

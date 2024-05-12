@@ -26,6 +26,7 @@ const authSlice = createSlice({
       state.status = "succeeded";
       state.isLoggedIn = true;
       state.user = action.payload;
+      state.error = null;
     },
     requestFailure: (state, action: PayloadAction<string>) => {
       state.status = "failed";
@@ -37,9 +38,21 @@ const authSlice = createSlice({
       state.status = "idle";
       state.error = null;
     },
+    updateUserState: (state, action: PayloadAction<Partial<User>>) => {
+      if (state.user) {
+        state.user = { ...state.user, ...action.payload };
+      }
+    },
   },
 });
 
-export const { requestStart, requestSuccess, requestFailure, signOut } =
-  authSlice.actions;
+export const {
+  requestStart,
+  requestSuccess,
+  requestFailure,
+  signOut,
+  updateUserState,
+  
+} = authSlice.actions;
+
 export default authSlice.reducer;

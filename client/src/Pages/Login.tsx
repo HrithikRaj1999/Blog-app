@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authenticateUser } from "../services/authService";
 import PasswordInputWithToggle from "../Component/PasswordInput";
+import { AppDispatch } from "../store/store";
+import { fetchBlogs } from "../ReduxSlice/blogSlice";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +17,7 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const blogDispath = useDispatch<AppDispatch>();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -28,6 +30,7 @@ const LoginPage = () => {
 
     try {
       await dispatch(authenticateUser({ email, password }, "login") as any);
+      await blogDispath(fetchBlogs());
       navigate("/");
     } catch {
       setError("Login failed. Please check your credentials and try again.");

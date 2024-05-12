@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Blog } from "../Types";
 import axios from "axios";
-import { API_ROUTES } from "../Router/BlogRoute";
+import { BLOG_API_ROUTES } from "../Router/BlogRoute";
 
 interface BlogState {
   blogs: Blog[];
@@ -12,7 +12,7 @@ export const fetchBlogs = createAsyncThunk(
   "blogs/fetchBlogs",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get<Blog[]>(API_ROUTES.FETCH_ALL_BLOGS, {
+      const response = await axios.get<Blog[]>(BLOG_API_ROUTES.FETCH_ALL_BLOGS, {
         withCredentials: true,
       });
       console.log({ InRedux: response.data });
