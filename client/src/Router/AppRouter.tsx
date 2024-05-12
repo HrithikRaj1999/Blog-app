@@ -19,6 +19,7 @@ import MakeBlog from "./../Component/Blog/MakeBlog";
 import Home from "../Pages/Home";
 import ShowOwnBlog from "../Component/Blog/ShowOwnBlog";
 import EditBlog from "../Component/Blog/EditBlog";
+import EditProfile from "../Component/Profile/EditProfile";
 
 const appRouter = createBrowserRouter([
   {
@@ -44,7 +45,7 @@ const appRouter = createBrowserRouter([
               { path: "create-blog", element: <MakeBlog /> },
               { path: "show-own-blog", element: <ShowOwnBlog /> },
               { path: "edit-blog", element: <EditBlog /> },
-              // { path: "analytics", element: <AnalyticsComponent /> },
+              { path: "edit-profile", element: <EditProfile /> },
               { index: true, element: <Welcome /> },
             ],
           },

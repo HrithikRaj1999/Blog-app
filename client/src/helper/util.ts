@@ -1,5 +1,5 @@
-import { SetStateAction } from "react";
-import { Blog } from "../Types";
+import React, { SetStateAction } from "react";
+import { Blog, EditProfileForm } from "../Types";
 
 export const isValidEmail = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -91,5 +91,32 @@ export const validateBlogForm = (
   }
 
   setErrors(newErrors);
+  return isValid;
+};
+
+// Validate the form data
+export const validateEditUserForm = (
+  formData: EditProfileForm,
+  setErrors: React.Dispatch<SetStateAction<Record<string, string>>>
+) => {
+  let isValid = true;
+  const validationErrors: Record<string, string> = {};
+
+  if (!formData.name) {
+    validationErrors.name = "Name is required";
+    isValid = false;
+  }
+
+  if (!formData.email) {
+    validationErrors.email = "Email is required";
+    isValid = false;
+  }
+
+  if (formData.password !== formData.confirmPassword) {
+    validationErrors.password = "Passwords do not match";
+    isValid = false;
+  }
+
+  setErrors(validationErrors);
   return isValid;
 };

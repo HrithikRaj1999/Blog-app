@@ -3,13 +3,19 @@ import { Form, InputGroup, Button } from "react-bootstrap";
 import { Eye, EyeOff } from "react-feather";
 
 interface PasswordInputWithToggleProps {
-  password: string;
-  setPassword: (password: string) => void;
+  controlId: string;
+  name: string;
+  placeholder: string;
+  value: string;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const PasswordInputWithToggle: FC<PasswordInputWithToggleProps> = ({
-  password,
-  setPassword,
+  controlId,
+  name,
+  placeholder,
+  value,
+  handleChange,
 }) => {
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
@@ -18,14 +24,15 @@ const PasswordInputWithToggle: FC<PasswordInputWithToggleProps> = ({
   };
 
   return (
-    <Form.Group controlId="formPassword" className="mb-3">
-      <Form.Label>Password</Form.Label>
+    <Form.Group controlId={controlId} className="mb-3">
+      <Form.Label>{placeholder}</Form.Label>
       <InputGroup>
         <Form.Control
           type={passwordVisible ? "text" : "password"}
-          placeholder="Enter password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          onChange={handleChange}
           required
         />
         <Button variant="outline-primary" onClick={togglePasswordVisibility}>

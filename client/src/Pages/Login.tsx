@@ -7,15 +7,25 @@ import { authenticateUser } from "../services/authService";
 import PasswordInputWithToggle from "../Component/PasswordInput";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
+    const { email, password } = formData;
     if (!proceedLogin({ setError, email, password })) return;
+
     try {
       await dispatch(authenticateUser({ email, password }, "login") as any);
       navigate("/");
@@ -25,7 +35,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100 w">
+    <Container className="d-flex justify-content-center align-items-center vh-100">
       <div className="w-50">
         <Row>
           <Col md={12} className="border p-4 bg-light rounded">
@@ -36,22 +46,27 @@ const LoginPage = () => {
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   type="email"
+                  name="email" // Identifies the field name
                   placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formData.email}
+                  onChange={handleChange}
                   required
                 />
               </Form.Group>
 
               <PasswordInputWithToggle
-                password={password}
-                setPassword={setPassword}
+                controlId="formPassword"
+                name="password"
+                placeholder="Enter password"
+                value={formData.password}
+                handleChange={handleChange}
               />
+
               <Button variant="link" className="p-0 mb-2">
-                Forget Password?
+                Forgot Password?
               </Button>
               <h6 className="mb-5">
-                Dont have an account? <Link to={"/signup"}> Sign up </Link>
+                Don't have an account? <Link to={"/signup"}>Sign up</Link>
               </h6>
               <Button variant="primary" type="submit" className="w-100">
                 Login

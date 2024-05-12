@@ -2,25 +2,38 @@ import { FormEvent, useState } from "react";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { proceedSignup } from "../helper/util";
 import { Link, useNavigate } from "react-router-dom";
-import { authenticateUser } from "../services/authService";
 import { useDispatch } from "react-redux";
+import { authenticateUser } from "../services/authService";
 import PasswordInputWithToggle from "../Component/PasswordInput";
 
 const SignupPage = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   const handleSignup = async (e: FormEvent) => {
     e.preventDefault();
+    const { name, email, password } = formData;
     if (!proceedSignup({ name, email, password, setError })) return;
-    await dispatch(
-      authenticateUser({ name, email, password }, "signup") as any
-    );
-    navigate("/login");
+
+    try {
+      await dispatch(
+        authenticateUser({ name, email, password }, "signup") as any
+      );
+      navigate("/login");
+    } catch {
+      setError("Signup failed. Please check your details and try again.");
+    }
   };
 
   return (
@@ -35,9 +48,10 @@ const SignupPage = () => {
                 <Form.Label>Full Name</Form.Label>
                 <Form.Control
                   type="text"
+                  name="name" // Name attribute used here
                   placeholder="Enter full name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={formData.name}
+                  onChange={handleChange}
                   required
                 />
               </Form.Group>
@@ -46,20 +60,26 @@ const SignupPage = () => {
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   type="email"
+                  name="email" // Name attribute used here
                   placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formData.email}
+                  onChange={handleChange}
                   required
                 />
               </Form.Group>
 
               <PasswordInputWithToggle
-                password={password}
-                setPassword={setPassword}
+                controlId="formPassword"
+                name="password"
+                placeholder="Enter password"
+                value={formData.password}
+                handleChange={handleChange}
               />
+
               <h6 className="mb-3">
-                Have an account? <Link to={"/login"}> Login </Link>
+                Have an account? <Link to="/login">Login</Link>
               </h6>
+
               <Button variant="primary" type="submit" className="w-100">
                 Sign Up
               </Button>

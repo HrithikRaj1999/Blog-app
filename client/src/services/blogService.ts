@@ -11,7 +11,6 @@ import {
 } from "../ReduxSlice/blogSlice";
 import { requestFailure } from "../ReduxSlice/authSlice";
 
-// Create a new blog
 export const createBlog =
   (blogData: Partial<Blog>) => async (dispatch: AppDispatch) => {
     dispatch(requestBlogStart());
