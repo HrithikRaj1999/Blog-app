@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { createBlog } from "../../services/blogService";
 import { useNavigate } from "react-router-dom";
 import { CommonBlogEditModal } from "./CommonBlogEditModal";
+import { toast } from "react-toastify";
 
 const MakeBlogPage = () => {
   const [show, setShow] = useState(false);
@@ -22,8 +23,9 @@ const MakeBlogPage = () => {
       if (!validateBlogForm(blogData, setErrors)) return;
       await dispatch(createBlog(blogData) as any);
       navigate("/secure/dashboard/show-own-blog");
-    } catch (error) {
-      console.log(error);
+      toast.success("Blog Created successfully");
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message ?? error);
     }
     handleClose();
   };

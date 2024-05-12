@@ -78,7 +78,10 @@ export const deleteBlog = async (
 
   try {
     const deletedBlog = await BlogModel.findByIdAndDelete(id);
-
+    if (deletedBlog?.createdBy.toString() !== req.user?.userId)
+      return res.status(403).json({
+        message: "Forbidden: User not authorised",
+      });
     if (!deletedBlog) {
       return next(new ErrorHandler(404, "Blog post not found"));
     }

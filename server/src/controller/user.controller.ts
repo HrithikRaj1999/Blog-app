@@ -35,7 +35,6 @@ export const fetchSingleUser = async (
   }
 };
 
-// Update a user's basic information
 export const updateUser = async (
   req: Request,
   res: Response,

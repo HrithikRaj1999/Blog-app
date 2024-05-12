@@ -51,7 +51,7 @@ const blogSlice = createSlice({
       );
       if (index !== -1) state.blogs[index] = action.payload;
     },
-    deleteBlog: (state, action: PayloadAction<string>) => {
+    removeBlog: (state, action: PayloadAction<string>) => {
       state.blogs = state.blogs.filter((blog) => blog._id !== action.payload);
     },
   },
@@ -77,7 +77,7 @@ export const {
   requestBlogFailure,
   addBlog,
   editBlog,
-  deleteBlog,
+  removeBlog,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;

@@ -1,4 +1,4 @@
-import { ListGroup } from "react-bootstrap";
+import { Container, ListGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import Admindashboard from "./Admindashboard";
@@ -9,7 +9,7 @@ const DashboardMenu = () => {
     (state: RootState) => state?.auth?.user?.role || "user"
   );
   return (
-    <div>
+    <Container>
       <h1>Dashboard</h1>
       <ListGroup>
         <ListGroup.Item as={Link} to="edit-profile" action>
@@ -21,7 +21,7 @@ const DashboardMenu = () => {
           <Userdashboard />
         )}
       </ListGroup>
-    </div>
+    </Container>
   );
 };
 

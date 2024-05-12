@@ -5,9 +5,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { validateBlogForm } from "../../helper/util";
 import { updateBlog } from "../../services/blogService";
 import { Blog } from "../../Types";
+import { toast } from "react-toastify";
 
 const EditBlog = () => {
-  
   const location = useLocation();
   const initData = location.state;
   const [show, setShow] = useState(true);
@@ -27,8 +27,9 @@ const EditBlog = () => {
       if (!validateBlogForm(blogData, setErrors)) return;
       await dispatch(updateBlog(blogData._id!, blogData) as any);
       navigate("/secure/dashboard/show-own-blog");
-    } catch (error) {
-      console.log(error);
+      toast.success("Update success");
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message ?? error);
     }
     handleClose();
   };

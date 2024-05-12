@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authenticateUser } from "../services/authService";
 import PasswordInputWithToggle from "../Component/PasswordInput";
+import { toast } from "react-toastify";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -31,7 +32,9 @@ const SignupPage = () => {
         authenticateUser({ name, email, password }, "signup") as any
       );
       navigate("/login");
-    } catch {
+      toast.success("Signup successful");
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message ?? error);
       setError("Signup failed. Please check your details and try again.");
     }
   };

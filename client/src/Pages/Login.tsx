@@ -7,6 +7,7 @@ import { authenticateUser } from "../services/authService";
 import PasswordInputWithToggle from "../Component/PasswordInput";
 import { AppDispatch } from "../store/store";
 import { fetchBlogs } from "../ReduxSlice/blogSlice";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -32,7 +33,9 @@ const LoginPage = () => {
       await dispatch(authenticateUser({ email, password }, "login") as any);
       await blogDispath(fetchBlogs());
       navigate("/");
-    } catch {
+      toast.success("Authentication successful");
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message ?? error);
       setError("Login failed. Please check your credentials and try again.");
     }
   };

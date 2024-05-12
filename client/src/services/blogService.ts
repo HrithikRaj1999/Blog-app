@@ -5,6 +5,7 @@ import { AppDispatch } from "../store/store";
 import {
   addBlog,
   editBlog,
+  removeBlog,
   requestBlogFailure,
   requestBlogStart,
   requestBlogSuccess,
@@ -38,9 +39,13 @@ export const updateBlog =
   (id: string, blogData: Partial<Blog>) => async (dispatch: AppDispatch) => {
     dispatch(requestBlogStart());
     try {
-      const response = await axios.patch(BLOG_API_ROUTES.UPDATE_BLOG(id), blogData, {
-        withCredentials: true,
-      });
+      const response = await axios.patch(
+        BLOG_API_ROUTES.UPDATE_BLOG(id),
+        blogData,
+        {
+          withCredentials: true,
+        }
+      );
       if (response.status === 200) {
         dispatch(requestBlogSuccess());
         dispatch(editBlog(response.data.blog));
@@ -57,12 +62,18 @@ export const updateBlog =
   };
 
 // Delete a blog by ID
-export const deleteBlog = async (id: string) => {
+export const deleteBlog = (id: string) => async (dispatch: AppDispatch) => {
+  dispatch(requestBlogStart());
   try {
     const response = await axios.delete(BLOG_API_ROUTES.DELETE_BLOG(id), {
       withCredentials: true,
     });
-    return response.data;
+    if (response.status === 200) {
+      dispatch(requestBlogSuccess());
+      dispatch(removeBlog(id));
+    } else {
+      dispatch(requestBlogFailure("Failed to authenticate"));
+    }
   } catch (error) {
     console.error(`Error deleting blog with ID ${id}:`, error);
     throw error;

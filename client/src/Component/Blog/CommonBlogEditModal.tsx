@@ -25,9 +25,6 @@ export const CommonBlogEditModal = ({
   return (
     <div>
       <Container>
-        <Button variant="primary" onClick={handleShow}>
-          Create Blog
-        </Button>
         <DisclaimerPage />
         <Modal show={show} onHide={handleClose}>
           <Form onSubmit={handleSubmit}>
@@ -90,6 +87,9 @@ export const CommonBlogEditModal = ({
             </Modal.Footer>
           </Form>
         </Modal>
+        <Button variant="primary" onClick={handleShow}>
+          Create Blog
+        </Button>
       </Container>
     </div>
   );
