@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ErrorHandler } from "../types/ErrorHandler-type";
 import BlogModel from "../model/blog.model";
-import UserModel from "../model/user.model";
 
 export const createNewBlog = async (
   req: Request,
@@ -20,7 +19,7 @@ export const createNewBlog = async (
       description,
       createdBy: req.user?.userId,
     });
-    return res.status(201).json(newBlog);
+    return res.status(201).json({ blog: newBlog });
   } catch (error) {
     next(new ErrorHandler(500, "Server Error: Unable to create blog post"));
   }

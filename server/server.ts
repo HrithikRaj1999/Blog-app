@@ -44,7 +44,7 @@ app.get("/", serverStatus);
 
 app.use("/api/auth", authRouter);
 
-//user must be authenticated
+//Form here onward user must be authenticated
 app.use(authenticate);
 
 app.use("/api/blog", blogRouter);

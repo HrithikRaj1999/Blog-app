@@ -1,4 +1,5 @@
 import { SetStateAction } from "react";
+import { Blog } from "../Types";
 
 export const isValidEmail = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -59,4 +60,36 @@ export const proceedLogin = ({
     return false;
   }
   return true;
+};
+export const validateBlogForm = (
+  blogData: Partial<Blog>,
+  setErrors: React.Dispatch<SetStateAction<Partial<Blog>>>
+) => {
+  if (!blogData) {
+    return false;
+  }
+
+  const newErrors: { [key: string]: string } = {};
+  let isValid = true;
+
+  // Validate heading
+  if (!blogData.heading || blogData.heading.trim() === "") {
+    newErrors.heading = "Heading cannot be empty";
+    isValid = false;
+  }
+
+  // Validate author
+  if (!blogData.author || blogData.author.trim() === "") {
+    newErrors.author = "Author cannot be empty";
+    isValid = false;
+  }
+
+  // Validate description length
+  if (blogData.description && blogData.description.length > 1000000) {
+    newErrors.description = "Description cannot exceed 100,0000 characters";
+    isValid = false;
+  }
+
+  setErrors(newErrors);
+  return isValid;
 };

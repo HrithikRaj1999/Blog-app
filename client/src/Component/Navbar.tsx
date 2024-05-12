@@ -1,6 +1,6 @@
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { signOut } from "../authentication/authSlice";
+import { signOut } from "../ReduxSlice/authSlice";
 import { RootState } from "../store/store";
 import { Link, useNavigate } from "react-router-dom";
 import { signOutFromServer } from "../services/authService";
@@ -28,9 +28,6 @@ const ResponsiveNavbar = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/secure/blog">
-              All Blogs
-            </Nav.Link>
             <Nav.Link as={Link} to="/about">
               About
             </Nav.Link>

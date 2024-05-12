@@ -5,9 +5,10 @@ import {
   requestFailure,
   requestStart,
   requestSuccess,
-} from "../authentication/authSlice";
+} from "../ReduxSlice/authSlice";
 
 interface Credentials {
+  name?: string;
   email: string;
   password: string;
 }
@@ -20,7 +21,7 @@ export const authenticateUser =
       const response = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/auth/${urlPath}`,
         credentials,
-        {withCredentials: true}
+        { withCredentials: true }
       );
       if (response.status === 200) {
         if (urlPath === "login") {

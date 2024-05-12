@@ -1,9 +1,10 @@
 import { FormEvent, useState } from "react";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { proceedSignup } from "../helper/util";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authenticateUser } from "../services/authService";
 import { useDispatch } from "react-redux";
+import PasswordInputWithToggle from "../Component/PasswordInput";
 
 const SignupPage = () => {
   const [name, setName] = useState("");
@@ -11,11 +12,15 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-
-  const handleSignup = (e: FormEvent) => {
+  const navigate = useNavigate();
+  
+  const handleSignup = async (e: FormEvent) => {
     e.preventDefault();
     if (!proceedSignup({ name, email, password, setError })) return;
-    dispatch(authenticateUser({ email, password }, "signup") as any);
+    await dispatch(
+      authenticateUser({ name, email, password }, "signup") as any
+    );
+    navigate("/login");
   };
 
   return (
@@ -48,16 +53,10 @@ const SignupPage = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formPassword" className="mb-3">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </Form.Group>
+              <PasswordInputWithToggle
+                password={password}
+                setPassword={setPassword}
+              />
               <h6 className="mb-3">
                 Have an account? <Link to={"/login"}> Login </Link>
               </h6>

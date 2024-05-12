@@ -4,6 +4,7 @@ import { proceedLogin } from "../helper/util";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authenticateUser } from "../services/authService";
+import PasswordInputWithToggle from "../Component/PasswordInput";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -26,7 +27,6 @@ const LoginPage = () => {
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100 w">
       <div className="w-50">
-        {" "}
         <Row>
           <Col md={12} className="border p-4 bg-light rounded">
             <h2 className="mb-4 text-center">Login</h2>
@@ -43,18 +43,11 @@ const LoginPage = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formPassword" className="mb-3">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </Form.Group>
+              <PasswordInputWithToggle
+                password={password}
+                setPassword={setPassword}
+              />
               <Button variant="link" className="p-0 mb-2">
-                {" "}
                 Forget Password?
               </Button>
               <h6 className="mb-5">
