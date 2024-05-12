@@ -24,3 +24,16 @@ npm install
 ```bash
 npm run dev
 ```
+## These are some credentials for testing
+
+## email                                           password
+1. superuser
+    - superadmin@superadmin.com                       admin@123
+2. admin
+    - neha@neha.com                                   Neha@123  
+    - shri@shri.com                                   Shri@123  
+3. users
+    - umaid@umaid.com                                 Umaid@123
+    - rahul@rahul.com                                 Rahul@1234
+    - varun@varun.com                                 Varun@123
+
