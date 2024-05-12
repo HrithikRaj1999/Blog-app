@@ -4,17 +4,11 @@ const Admindashboard = () => {
   return (
     <>
       <ListGroup>
-        <ListGroup.Item action as={Link} to="/show-users">
-          Show All Users
+        <ListGroup.Item action as={Link} to="admin/expose-all">
+          Show All Users and there blogs
         </ListGroup.Item>
-        <ListGroup.Item action as={Link} to="/delete-user-blog">
-          Delete User Blog
-        </ListGroup.Item>
-        <ListGroup.Item action as={Link} to="/make-user-admin">
+        <ListGroup.Item action as={Link} to="admin/make-user-admin">
           Make a User Admin
-        </ListGroup.Item>
-        <ListGroup.Item action as={Link} to="/delete-user">
-          Delete User
         </ListGroup.Item>
       </ListGroup>
     </>

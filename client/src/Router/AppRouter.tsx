@@ -21,6 +21,7 @@ import ShowOwnBlog from "../Component/Blog/ShowOwnBlog";
 import EditBlog from "../Component/Blog/EditBlog";
 import EditProfile from "../Component/Profile/EditProfile";
 import AboutPage from "../Pages/AboutPage";
+import AllUsersAndBlogs from "../Component/Dashboard/AllUsersAndBlogs";
 
 const appRouter = createBrowserRouter([
   {
@@ -44,10 +45,15 @@ const appRouter = createBrowserRouter([
             path: "dashboard",
             element: <Dashboard />,
             children: [
-              { path: "create-blog", element: <MakeBlog /> },
-              { path: "show-own-blog", element: <ShowOwnBlog /> },
-              { path: "edit-blog", element: <EditBlog /> },
               { path: "edit-profile", element: <EditProfile /> },
+              
+              { path: "user/create-blog", element: <MakeBlog /> },
+              { path: "user/show-own-blog", element: <ShowOwnBlog /> },
+              { path: "user/edit-blog", element: <EditBlog /> },
+              { path: "admin/expose-all", element: <AllUsersAndBlogs /> },
+              // { path: "user/show-own-blog", element: <ShowOwnBlog /> },
+              // { path: "user/edit-blog", element: <EditBlog /> },
+              // { path: "user/edit-profile", element: <EditProfile /> },
               { index: true, element: <Welcome /> },
             ],
           },

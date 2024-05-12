@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ErrorHandler } from "../types/ErrorHandler-type";
-import BlogModel from "../model/blog.model";
+import BlogModel, { BlogType } from "../model/blog.model";
 
 export const createNewBlog = async (
   req: Request,
@@ -68,7 +68,7 @@ export const updateBlog = async (
   }
 };
 
-//  delete a blog post
+// Delete a blog post
 export const deleteBlog = async (
   req: Request,
   res: Response,
@@ -77,15 +77,34 @@ export const deleteBlog = async (
   const { id } = req.params;
 
   try {
-    const deletedBlog = await BlogModel.findByIdAndDelete(id);
-    if (deletedBlog?.createdBy.toString() !== req.user?.userId)
-      return res.status(403).json({
-        message: "Forbidden: User not authorised",
-      });
-    if (!deletedBlog) {
+    const blogToDelete = (await BlogModel.findById(id).populate(
+      "createdBy"
+    )) as BlogType;
+    if (!blogToDelete) {
       return next(new ErrorHandler(404, "Blog post not found"));
     }
 
+    const blogOwnerId = blogToDelete.createdBy._id.toString();
+    const userId = req.user?.userId;
+    const userRole = req.user?.role;
+    const blogOwnerRole = blogToDelete.createdBy.role;
+
+    // Check if the user is authorized to delete the blog
+    if (userId !== blogOwnerId) {
+      // Regular users cannot delete other users' posts
+      if (userRole === "user") {
+        return res
+          .status(403)
+          .json({ message: "Forbidden: User not authorised" });
+      }
+      // Admins cannot delete super-admin's posts
+      if (userRole === "admin" && blogOwnerRole === "super-admin") {
+        return res
+          .status(403)
+          .json({ message: "Forbidden: Cannot delete super-admin's posts" });
+      }
+    }
+    await BlogModel.findByIdAndDelete(id);
     res.status(200).json({ message: "Blog post successfully deleted" });
   } catch (error) {
     next(new ErrorHandler(500, "Server Error: Unable to delete blog post"));

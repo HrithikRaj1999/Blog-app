@@ -15,7 +15,6 @@ export const fetchBlogs = createAsyncThunk(
       const response = await axios.get<Blog[]>(BLOG_API_ROUTES.FETCH_ALL_BLOGS, {
         withCredentials: true,
       });
-      console.log({ InRedux: response.data });
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.toString());

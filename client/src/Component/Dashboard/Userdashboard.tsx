@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 const Userdashboard = () => {
   return (
     <>
-      <ListGroup.Item action as={Link} to="/secure/dashboard/create-blog">
+      <ListGroup.Item action as={Link} to="/secure/dashboard/user/create-blog">
         Make Blog
       </ListGroup.Item>
-      <ListGroup.Item action as={Link} to="/secure/dashboard/show-own-blog">
+      <ListGroup.Item action as={Link} to="/secure/dashboard/user/show-own-blog">
         Show Own Blog
       </ListGroup.Item>
     </>

@@ -42,7 +42,7 @@ const LoginPage = () => {
 
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100">
-      <div className="w-50">
+      <div className="w-50" style={{ minWidth: "350px" }}>
         <Row>
           <Col md={12} className="border p-4 bg-light rounded">
             <h2 className="mb-4 text-center">Login</h2>

@@ -1,10 +1,11 @@
 import { Schema, model } from "mongoose";
+import { IUser } from "./user.model";
 
 export interface BlogType {
   heading: string;
   author: string;
   description: string;
-  createdBy: Schema.Types.ObjectId;
+  createdBy: IUser;
 }
 
 const blogSchema = new Schema<BlogType>(

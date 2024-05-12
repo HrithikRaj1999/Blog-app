@@ -1,10 +1,11 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface IUser extends Document {
+  _id: Schema.Types.ObjectId;
   name: string;
   email: string;
   password: string;
-  role: "admin" | "user";
+  role: "admin" | "user" | "super-admin";
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -24,7 +25,7 @@ const userSchema: Schema = new Schema(
   {
     toJSON: {
       transform: function (doc, ret, options) {
-        delete ret.password; 
+        delete ret.password;
         delete ret.__v;
         return ret;
       },

@@ -12,7 +12,7 @@ const EditBlog = () => {
   const initData = location.state;
   const [show, setShow] = useState(true);
   const handleClose = () => {
-    navigate("/secure/dashboard/show-own-blog");
+    navigate("/secure/dashboard/user/show-own-blog");
     setShow(false);
   };
   const handleShow = () => setShow(true);
@@ -26,7 +26,7 @@ const EditBlog = () => {
       if (!blogData) return;
       if (!validateBlogForm(blogData, setErrors)) return;
       await dispatch(updateBlog(blogData._id!, blogData) as any);
-      navigate("/secure/dashboard/show-own-blog");
+      navigate("/secure/dashboard/user/show-own-blog");
       toast.success("Update success");
     } catch (error: any) {
       toast.error(error?.response?.data?.message ?? error);

@@ -17,7 +17,6 @@ const BlogCard = ({
 }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const dispatch = useDispatch();
-
   const handleDelete = async () => {
     try {
       await dispatch(deleteBlog(blog._id!) as any);
@@ -28,7 +27,6 @@ const BlogCard = ({
       setShowDeleteModal(false);
     }
   };
-
   const onDelete = () => {
     setShowDeleteModal(true);
   };

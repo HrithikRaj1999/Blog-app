@@ -22,7 +22,7 @@ const MakeBlogPage = () => {
       if (!blogData) return;
       if (!validateBlogForm(blogData, setErrors)) return;
       await dispatch(createBlog(blogData) as any);
-      navigate("/secure/dashboard/show-own-blog");
+      navigate("/secure/dashboard/user/show-own-blog");
       toast.success("Blog Created successfully");
     } catch (error: any) {
       toast.error(error?.response?.data?.message ?? error);

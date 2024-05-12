@@ -12,7 +12,7 @@ const DashboardMenu = () => {
     <Container>
       <h1>Dashboard</h1>
       <ListGroup>
-        <ListGroup.Item as={Link} to="edit-profile" action>
+        <ListGroup.Item as={Link} to="/secure/dashboard/edit-profile" action>
           Edit profile
         </ListGroup.Item>
         {role === "admin" || role === "super-admin" ? (
