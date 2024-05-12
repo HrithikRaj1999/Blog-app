@@ -1,45 +1,10 @@
-import { FormEvent, useState } from "react";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
-import { proceedLogin } from "../helper/util";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { authenticateUser } from "../services/authService";
+import { Link } from "react-router-dom";
 import PasswordInputWithToggle from "../Component/PasswordInput";
-import { AppDispatch } from "../store/store";
-import { fetchBlogs } from "../ReduxSlice/blogSlice";
-import { toast } from "react-toastify";
+import useLogin from "../hooks/Auth/useLogin";
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [error, setError] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const blogDispath = useDispatch<AppDispatch>();
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleLogin = async (e: FormEvent) => {
-    e.preventDefault();
-    const { email, password } = formData;
-    if (!proceedLogin({ setError, email, password })) return;
-
-    try {
-      await dispatch(authenticateUser({ email, password }, "login") as any);
-      await blogDispath(fetchBlogs());
-      navigate("/");
-      toast.success("Authentication successful");
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message ?? error);
-      setError("Login failed. Please check your credentials and try again.");
-    }
-  };
-
+  const { error, handleLogin, formData, handleChange } = useLogin();
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100">
       <div className="w-50" style={{ minWidth: "350px" }}>

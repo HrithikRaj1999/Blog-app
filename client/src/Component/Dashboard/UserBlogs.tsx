@@ -48,7 +48,8 @@ const UserBlogs = ({
               </div>
 
               <Button
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setIdToDelete(blog._id!);
                   setShowDeleteModal(true);
                 }}

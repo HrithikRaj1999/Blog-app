@@ -1,8 +1,9 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Card, Form } from "react-bootstrap";
 import UserBlogs from "./UserBlogs";
 import DeleteConfirmation from "../Blog/DeleteConfirmation";
 import BlogModal from "../Blog/BlogModal";
 import useAllUsersAndBlog from "../../hooks/Blog/useAllUsersAndBlog";
+
 const AllUsersAndBlogs = () => {
   const {
     users,
@@ -21,42 +22,45 @@ const AllUsersAndBlogs = () => {
   } = useAllUsersAndBlog();
 
   return (
-    <div>
-      <Container>
-        <h1 className="mb-5 text-center">User Details and Blogs related to them</h1>
-        
-        {users.map((user) => (
-          <div key={user._id} className="user-container">
-            <Row className="mb-3">
-              <Col>
-                <h2>{user.name}</h2>
+    <Container className="my-5">
+      <h1 className="mb-5 text-center">
+        User Details and Blogs Related to Them
+      </h1>
+
+      {users.map((user) => (
+        <Card key={user._id} className="mb-4 shadow-sm">
+          <Card.Body>
+            <Row className="align-items-center mb-3">
+              <Col md={8}>
+                <h3>{user.name}</h3>
                 <p>Email: {user.email}</p>
-                <div className="d-flex align-items-center">
-                  <p className="col-3 mb-0">Role: {user.role}</p>{" "}
-                  <div className="col-3">
-                    <select
-                      value={selectedRole[user._id] || user.role}
-                      disabled={loggenInUser?._id === user._id}
-                      onChange={(e) =>
-                        handleRoleChange(user._id, e.target.value)
-                      }
-                      className="form-control"
-                    >
-                      <option value="user">User</option>
-                      <option value="admin">Admin</option>
-                    </select>
-                  </div>
-                  <div className="col-auto">
-                    <Button
-                      disabled={loggenInUser?._id === user._id}
-                      onClick={() => submitRoleChange(user._id)}
-                    >
-                      Update Role
-                    </Button>
-                  </div>
+                <div className="d-flex align-items-center mb-2">
+                  <p className="me-2 mb-0">Role:</p>
+                  <Form.Select
+                    size="sm"
+                    value={selectedRole[user._id] || user.role}
+                    disabled={loggenInUser?._id === user._id}
+                    onChange={(e) =>
+                      handleRoleChange(user._id, e.target.value)
+                    }
+                    style={{ width: '150px' }}
+                  >
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                  </Form.Select>
+                  <Button
+                    className="ms-2"
+                    size="sm"
+                    disabled={loggenInUser?._id === user._id}
+                    onClick={() => submitRoleChange(user._id)}
+                  >
+                    Update Role
+                  </Button>
                 </div>
               </Col>
             </Row>
+            <hr />
+            <h6>Blogs:</h6>
             <UserBlogs
               handleView={handleView}
               disabled={loggenInUser?._id === user._id}
@@ -64,9 +68,10 @@ const AllUsersAndBlogs = () => {
               setIdToDelete={setIdToDelete}
               setShowDeleteModal={setShowDeleteModal}
             />
-          </div>
-        ))}
-      </Container>
+          </Card.Body>
+        </Card>
+      ))}
+
       <DeleteConfirmation
         show={showDeleteModal}
         onHide={() => setShowDeleteModal(false)}
@@ -77,7 +82,7 @@ const AllUsersAndBlogs = () => {
         onHide={() => setShowModal(false)}
         blog={viewedBlog}
       />
-    </div>
+    </Container>
   );
 };
 

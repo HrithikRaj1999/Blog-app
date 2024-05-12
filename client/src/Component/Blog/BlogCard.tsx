@@ -1,10 +1,7 @@
 import { Button, Card, Col } from "react-bootstrap";
 import { Blog } from "../../Types";
 import DeleteConfirmation from "./DeleteConfirmation";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { deleteBlog } from "../../services/blogService";
-import { toast } from "react-toastify";
+import useBlogcard from "../../hooks/Blog/useBlogcard";
 
 interface BlogCardProps {
   blog: Blog;
@@ -19,26 +16,22 @@ const BlogCard: React.FC<BlogCardProps> = ({
   handleEdit = () => null,
   handleView = () => null,
 }) => {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const dispatch = useDispatch();
+  const {
+    showDeleteModal,
+    handleDelete,
+    onDelete,
+    onView,
+    setShowDeleteModal,
+  } = useBlogcard(blog, handleView);
 
-  const handleDelete = async () => {
-    try {
-      await dispatch(deleteBlog(blog._id!) as any);
-      toast.success("Deleted Successfully");
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message ?? "An error occurred");
-    } finally {
-      setShowDeleteModal(false);
-    }
+  const handleEditClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    handleEdit(blog);
   };
 
-  const onDelete = () => {
-    setShowDeleteModal(true);
-  };
-
-  const onView = () => {
-    handleView(blog);
+  const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    onDelete();
   };
 
   return (
@@ -68,14 +61,10 @@ const BlogCard: React.FC<BlogCardProps> = ({
             </div>
             {writable && (
               <div className="d-flex justify-content-between">
-                <Button
-                  variant="warning"
-                  size="sm"
-                  onClick={() => handleEdit(blog)}
-                >
+                <Button variant="warning" size="sm" onClick={handleEditClick}>
                   Edit
                 </Button>
-                <Button variant="danger" size="sm" onClick={onDelete}>
+                <Button variant="danger" size="sm" onClick={handleDeleteClick}>
                   Delete
                 </Button>
               </div>
@@ -88,7 +77,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
         onHide={() => setShowDeleteModal(false)}
         handleDelete={handleDelete}
       />
-      
     </>
   );
 };

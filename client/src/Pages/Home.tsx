@@ -1,26 +1,22 @@
 // Home.tsx
-import React, { useState } from "react";
+import React from "react";
 import { Container, Row } from "react-bootstrap";
 import BlogCard from "../Component/Blog/BlogCard";
 import BlogModal from "../Component/Blog/BlogModal";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { Navigate, useLocation } from "react-router-dom";
-import { Blog } from "../Types";
+import { Navigate } from "react-router-dom";
+import useHome from "../hooks/home/useHome";
 
 const Home: React.FC = () => {
-  const blogs = useSelector((state: RootState) => state.blogs.blogs);
-  const userData = useSelector((state: RootState) => state.auth);
-  const location = useLocation();
-
-  const [viewedBlog, setViewedBlog] = useState<Blog | null>(null);
-  const [showModal, setShowModal] = useState(false);
-
-  const handleView = (blog: Blog) => {
-    setViewedBlog(blog);
-    setShowModal(true);
-  };
-
+  const {
+    blogs,
+    userData,
+    location,
+    setShowModal,
+    viewedBlog,
+    showModal,
+    handleView,
+  } = useHome();
+  
   if (!userData.isLoggedIn || !userData.user) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
