@@ -20,6 +20,7 @@ import Home from "../Pages/Home";
 import ShowOwnBlog from "../Component/Blog/ShowOwnBlog";
 import EditBlog from "../Component/Blog/EditBlog";
 import EditProfile from "../Component/Profile/EditProfile";
+import AboutPage from "../Pages/AboutPage";
 
 const appRouter = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ const appRouter = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "login", element: <LoginPage /> },
       { path: "signup", element: <SignupPage /> },
+      { path: "about", element: <AboutPage /> },
       {
         path: "secure",
         element: <LoginRequiredRoute />,

@@ -9,7 +9,6 @@ const ShowOwnBlog = () => {
   const allBlogs = useSelector((state: RootState) => state.blogs.blogs);
   const userId = useSelector((state: RootState) => state.auth.user?._id);
   const navigate = useNavigate();
-
   const blogs = allBlogs.filter((blog) => blog.createdBy === userId);
   const handleEdit = (initData: Blog) =>
     navigate("/secure/dashboard/edit-blog", { state: initData });

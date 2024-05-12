@@ -6,7 +6,11 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <>
-      <ToastContainer />
+      <ToastContainer
+        autoClose={2000}
+        pauseOnFocusLoss={false}
+        pauseOnHover={false}
+      />
       <RouterProvider router={appRouter} />
     </>
   );

@@ -45,6 +45,7 @@ const MakeBlogPage = () => {
   return (
     <CommonBlogEditModal
       {...{
+        title: "Create Blog",
         handleShow,
         show,
         handleClose,

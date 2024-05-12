@@ -5,6 +5,7 @@ import { Blog } from "../../Types";
 interface CommonBlogEditModalPropsType {
   handleShow: () => void;
   show: boolean;
+  title?: string;
   handleClose: () => void;
   handleSubmit: (e: FormEvent) => Promise<void>;
   blogData: Blog;
@@ -15,6 +16,7 @@ interface CommonBlogEditModalPropsType {
 }
 export const CommonBlogEditModal = ({
   handleShow,
+  title = "Update Blog",
   show,
   handleClose,
   handleSubmit,
@@ -29,7 +31,7 @@ export const CommonBlogEditModal = ({
         <Modal show={show} onHide={handleClose}>
           <Form onSubmit={handleSubmit}>
             <Modal.Header closeButton>
-              <Modal.Title>Create Blog</Modal.Title>
+              <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form.Group controlId="heading">
