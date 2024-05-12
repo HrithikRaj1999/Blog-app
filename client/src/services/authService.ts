@@ -6,12 +6,8 @@ import {
   requestStart,
   requestSuccess,
 } from "../ReduxSlice/authSlice";
-
-interface Credentials {
-  name?: string;
-  email: string;
-  password: string;
-}
+import { fetchUsers } from "../ReduxSlice/userSlice";
+import { Credentials } from "../Types";
 
 export const authenticateUser =
   (credentials: Credentials, urlPath: string) =>
@@ -26,6 +22,9 @@ export const authenticateUser =
       if (response.status === 200) {
         if (urlPath === "login") {
           dispatch(requestSuccess(response.data.user));
+          if (["admin", "super-admin"].includes(response.data.user.role)) {
+            dispatch(fetchUsers() as any);
+          }
         }
       } else {
         dispatch(requestFailure("Failed to authenticate"));
@@ -49,4 +48,3 @@ export const signOutFromServer = async () => {
     throw error;
   }
 };
-

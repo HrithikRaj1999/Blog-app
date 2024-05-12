@@ -1,3 +1,4 @@
+// BlogCard.tsx
 import { Button, Card, Col } from "react-bootstrap";
 import { Blog } from "../../Types";
 import DeleteConfirmation from "./DeleteConfirmation";
@@ -6,17 +7,22 @@ import { useDispatch } from "react-redux";
 import { deleteBlog } from "../../services/blogService";
 import { toast } from "react-toastify";
 
-const BlogCard = ({
-  blog,
-  writable = false,
-  handleEdit = () => null,
-}: {
+interface BlogCardProps {
   blog: Blog;
   writable?: boolean;
   handleEdit?: (initData: Blog) => void;
+  handleView?: (blog: Blog) => void;
+}
+
+const BlogCard: React.FC<BlogCardProps> = ({
+  blog,
+  writable = false,
+  handleEdit = () => null,
+  handleView = () => null,
 }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const dispatch = useDispatch();
+
   const handleDelete = async () => {
     try {
       await dispatch(deleteBlog(blog._id!) as any);
@@ -27,14 +33,26 @@ const BlogCard = ({
       setShowDeleteModal(false);
     }
   };
+
   const onDelete = () => {
     setShowDeleteModal(true);
   };
 
+  const onView = () => {
+    handleView(blog);
+  };
+
   return (
     <>
-      <Col xs={12} sm={12} md={6} lg={4} xl={3} className="mb-3">
-        <Card className="blog-card" style={{ width: "100%" }}>
+      <Col
+        xs={12}
+        sm={12}
+        md={8}
+        lg={12}
+        className="mb-4 p-2"
+        style={{ cursor: "pointer" }}
+      >
+        <Card className="blog-card" style={{ width: "100%" }} onClick={onView}>
           <Card.Body>
             <Card.Title className="blog-title">{blog.heading}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted blog-author">
@@ -42,13 +60,13 @@ const BlogCard = ({
             </Card.Subtitle>
             <Card.Text className="blog-description">
               {blog.description}
-              <div className="text-muted small mt-2">
-                Created:{" "}
-                {new Date(blog.createdAt || new Date()).toLocaleDateString()} |
-                Updated:{" "}
-                {new Date(blog.updatedAt || new Date()).toLocaleDateString()}
-              </div>
             </Card.Text>
+            <div className="text-muted small mt-2">
+              Created:{" "}
+              {new Date(blog.createdAt || new Date()).toLocaleDateString()} |
+              Updated:{" "}
+              {new Date(blog.updatedAt || new Date()).toLocaleDateString()}
+            </div>
             {writable && (
               <div className="d-flex justify-content-between">
                 <Button

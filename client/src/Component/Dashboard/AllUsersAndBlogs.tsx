@@ -8,6 +8,8 @@ import DeleteConfirmation from "../Blog/DeleteConfirmation";
 import { deleteBlog } from "../../services/blogService";
 import { toast } from "react-toastify";
 import { changeUserRole } from "../../services/userService";
+import { Blog } from "../../Types";
+import BlogModal from "../Blog/BlogModal";
 const AllUsersAndBlogs = () => {
   const dispatch = useDispatch();
   const { users, status, error } = useSelector(
@@ -17,7 +19,13 @@ const AllUsersAndBlogs = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [idToDelete, setIdToDelete] = useState("");
   const [selectedRole, setSelectedRole] = useState<Record<string, string>>({});
+  const [viewedBlog, setViewedBlog] = useState<Blog | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
+  const handleView = (blog: Blog) => {
+    setViewedBlog(blog);
+    setShowModal(true);
+  };
   const handleRoleChange = (userId: string, newRole: string) => {
     setSelectedRole({ ...selectedRole, [userId]: newRole });
   };
@@ -41,9 +49,6 @@ const AllUsersAndBlogs = () => {
       setIdToDelete("");
     }
   };
-  useEffect(() => {
-    dispatch(fetchUsers() as any);
-  }, []);
 
   return (
     <div>
@@ -82,6 +87,7 @@ const AllUsersAndBlogs = () => {
               </Col>
             </Row>
             <UserBlogs
+              handleView={handleView}
               disabled={loggenInUser?._id === user._id}
               userId={user._id}
               setIdToDelete={setIdToDelete}
@@ -94,6 +100,11 @@ const AllUsersAndBlogs = () => {
         show={showDeleteModal}
         onHide={() => setShowDeleteModal(false)}
         handleDelete={handleDelete}
+      />
+      <BlogModal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        blog={viewedBlog}
       />
     </div>
   );

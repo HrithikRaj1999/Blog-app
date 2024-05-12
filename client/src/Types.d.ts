@@ -17,3 +17,8 @@ export interface EditProfileForm extends Partial<User> {
   password: string;
   confirmPassword: string;
 }
+export interface Credentials {
+  name?: string;
+  email: string;
+  password: string;
+}
