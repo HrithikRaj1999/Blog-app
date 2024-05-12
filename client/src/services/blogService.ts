@@ -17,7 +17,7 @@ export const createBlog =
       const response = await axios.post(API_ROUTES.CREATE_BLOG, blogData, {
         withCredentials: true,
       });
-      if (response.status === 200)
+      if (response.status === 201)
         dispatch(requestBlogSuccess(response.data.blog));
       else {
         dispatch(requestBlogFailure("Failed to authenticate"));

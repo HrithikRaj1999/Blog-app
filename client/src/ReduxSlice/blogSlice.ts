@@ -1,12 +1,27 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Blog } from "../Types";
+import axios from "axios";
+import { API_ROUTES } from "../Router/BlogRoute";
 
 interface BlogState {
   blogs: Blog[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
-
+export const fetchBlogs = createAsyncThunk(
+  "blogs/fetchBlogs",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get<Blog[]>(API_ROUTES.FETCH_ALL_BLOGS, {
+        withCredentials: true,
+      });
+      console.log({ InRedux: response.data });
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.toString());
+    }
+  }
+);
 const initialState: BlogState = {
   blogs: [],
   status: "idle",
@@ -20,9 +35,9 @@ const blogSlice = createSlice({
     requestBlogStart: (state) => {
       state.status = "loading";
     },
-    requestBlogSuccess: (state, action: PayloadAction<Blog[]>) => {
+    requestBlogSuccess: (state, action: PayloadAction<Blog>) => {
       state.status = "succeeded";
-      state.blogs = [...state.blogs, ...action.payload];
+      state.blogs.push(action.payload);
     },
     requestBlogFailure: (state, action: PayloadAction<string>) => {
       state.status = "failed";
@@ -40,6 +55,20 @@ const blogSlice = createSlice({
     deleteBlog: (state, action: PayloadAction<string>) => {
       state.blogs = state.blogs.filter((blog) => blog._id !== action.payload);
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchBlogs.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchBlogs.fulfilled, (state, action) => {
+        state.blogs = action.payload;
+        state.status = "succeeded";
+      })
+      .addCase(fetchBlogs.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload as string;
+      });
   },
 });
 

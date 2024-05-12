@@ -6,7 +6,7 @@ const Userdashboard = () => {
       <ListGroup.Item action as={Link} to="/secure/dashboard/create-blog">
         Make Blog
       </ListGroup.Item>
-      <ListGroup.Item action as={Link} to="/show-own">
+      <ListGroup.Item action as={Link} to="/secure/dashboard/show-own-blog">
         Show Own Blog
       </ListGroup.Item>
       <ListGroup.Item action as={Link} to="/edit-blog">

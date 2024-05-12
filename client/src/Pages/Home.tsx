@@ -1,28 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Card, Container, Row, Col } from "react-bootstrap";
-import axios from "axios";
-import { Blog } from "../Types";
+import React from "react";
+import { Container, Row } from "react-bootstrap";
 import BlogCard from "../Component/Blog/BlogCard";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { Navigate, useLocation } from "react-router-dom";
 
 const Home: React.FC = () => {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
-
-  useEffect(() => {
-    fetchBlogs();
-  }, []);
-
-  const fetchBlogs = async () => {
-    try {
-      const response = await axios.get<Blog[]>(
-        `${process.env.REACT_APP_SERVER_URL}/blog/`,
-        { withCredentials: true }
-      );
-      setBlogs(response.data);
-    } catch (error) {
-      console.error("Error fetching blogs:", error);
-    }
-  };
-
+  const blogs = useSelector((state: RootState) => state.blogs.blogs);
+  const userData = useSelector((state: RootState) => state.auth);
+  const location = useLocation();
+  if (!userData.isLoggedIn || !userData.user) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
   return (
     <Container className="mt-3">
       <Row className="justify-content-center">

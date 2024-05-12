@@ -1,14 +1,19 @@
 import { RouterProvider } from "react-router-dom";
 import "./App.css";
 import appRouter from "./Router/AppRouter";
-import { Provider } from "react-redux";
-import store from "./store/store";
-
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "./store/store";
+import { useEffect } from "react";
+import { fetchBlogs } from "./ReduxSlice/blogSlice";
 function App() {
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(fetchBlogs());
+  }, [dispatch]);
   return (
-    <Provider store={store}>
-      <RouterProvider router={appRouter} />;
-    </Provider>
+    <>
+      <RouterProvider router={appRouter} />
+    </>
   );
 }
 

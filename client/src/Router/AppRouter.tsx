@@ -17,6 +17,7 @@ import Welcome from "../Component/Dashboard/Welcome";
 // // const EditBlog = React.lazy(() => import("../Pages/EditBlog"));
 import MakeBlog from "./../Component/Blog/MakeBlog";
 import Home from "../Pages/Home";
+import ShowOwnBlog from "../Component/Blog/ShowOwnBlog";
 
 const appRouter = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ const appRouter = createBrowserRouter([
             element: <Dashboard />,
             children: [
               { path: "create-blog", element: <MakeBlog /> },
-              // { path: "profile", element: <ProfileComponent /> },
+              { path: "show-own-blog", element: <ShowOwnBlog /> },
               // { path: "settings", element: <SettingsComponent /> },
               // { path: "analytics", element: <AnalyticsComponent /> },
               { index: true, element: <Welcome /> },

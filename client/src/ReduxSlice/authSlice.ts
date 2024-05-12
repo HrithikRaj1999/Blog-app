@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface User {
+  _id: string;
   name: string;
   email: string;
   role: string;
@@ -17,7 +18,7 @@ const initialState: AuthState = {
   user: null,
   isLoggedIn: false,
   status: "idle",
-  error: null
+  error: null,
 };
 
 const authSlice = createSlice({
@@ -42,8 +43,9 @@ const authSlice = createSlice({
       state.status = "idle";
       state.error = null;
     },
-  }
+  },
 });
 
-export const { requestStart, requestSuccess, requestFailure, signOut } = authSlice.actions;
+export const { requestStart, requestSuccess, requestFailure, signOut } =
+  authSlice.actions;
 export default authSlice.reducer;

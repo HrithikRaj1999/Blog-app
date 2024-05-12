@@ -123,7 +123,7 @@ export const fetchAllBlogs = async (
   }
 
   try {
-    const blogs = await BlogModel.find(query).populate("createdBy");
+    const blogs = await BlogModel.find(query)
     res.status(200).json(blogs);
   } catch (error) {
     next(new ErrorHandler(500, "Server Error: Unable to retrieve blog posts"));

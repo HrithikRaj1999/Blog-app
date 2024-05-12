@@ -5,5 +5,5 @@ export const API_ROUTES = {
   UPDATE_BLOG: (id: string) => `${BASE_URL}/blog/${id}`,
   DELETE_BLOG: (id: string) => `${BASE_URL}/blog/${id}`,
   FETCH_SINGLE_BLOG: (id: string) => `${BASE_URL}/blog/${id}`,
-  FETCH_ALL_BLOGS: `${BASE_URL}/api/blog`
+  FETCH_ALL_BLOGS: `${BASE_URL}/blog`
 };

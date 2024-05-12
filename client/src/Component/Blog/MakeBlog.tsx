@@ -15,13 +15,12 @@ const MakeBlogPage = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!blogData) return;
-    if (!validateBlogForm(blogData, setErrors)) return;
-    console.log({ errors, blogData });
     try {
+      if (!blogData) return;
+      if (!validateBlogForm(blogData, setErrors)) return;
       await dispatch(createBlog(blogData) as any);
       navigate("/");
     } catch (error) {
