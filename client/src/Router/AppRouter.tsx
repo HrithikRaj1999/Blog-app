@@ -18,6 +18,7 @@ import Welcome from "../Component/Dashboard/Welcome";
 import MakeBlog from "./../Component/Blog/MakeBlog";
 import Home from "../Pages/Home";
 import ShowOwnBlog from "../Component/Blog/ShowOwnBlog";
+import EditBlog from "../Component/Blog/EditBlog";
 
 const appRouter = createBrowserRouter([
   {
@@ -42,7 +43,7 @@ const appRouter = createBrowserRouter([
             children: [
               { path: "create-blog", element: <MakeBlog /> },
               { path: "show-own-blog", element: <ShowOwnBlog /> },
-              // { path: "settings", element: <SettingsComponent /> },
+              { path: "edit-blog", element: <EditBlog /> },
               // { path: "analytics", element: <AnalyticsComponent /> },
               { index: true, element: <Welcome /> },
             ],

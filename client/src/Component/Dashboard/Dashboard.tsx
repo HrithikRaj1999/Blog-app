@@ -4,16 +4,14 @@ import DashboardMenu from "./DashboardMenu";
 
 const Dashboard = () => {
   return (
-    <div style={{ height: "100vh" }} className="mt-5">
-      <Row style={{ height: "100%", marginLeft: "15px" }}>
-        <Col md={3}>
-          <DashboardMenu />
-        </Col>
-        <Col md={9} className="mt-5">
-          <Outlet />
-        </Col>
-      </Row>
-    </div>
+    <Row style={{ marginLeft: "15px" }}>
+      <Col xs={12} md={3}>
+        <DashboardMenu />
+      </Col>
+      <Col xs={12} md={9}>
+        <Outlet />
+      </Col>
+    </Row>
   );
 };
 

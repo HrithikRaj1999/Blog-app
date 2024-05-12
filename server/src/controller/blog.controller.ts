@@ -61,7 +61,7 @@ export const updateBlog = async (
       { new: true }
     );
 
-    res.status(200).json(updatedBlog);
+    res.status(200).json({ blog: updatedBlog });
   } catch (error) {
     next(new ErrorHandler(500, "Server Error: Unable to update blog post"));
   }
@@ -123,7 +123,7 @@ export const fetchAllBlogs = async (
   }
 
   try {
-    const blogs = await BlogModel.find(query)
+    const blogs = await BlogModel.find(query);
     res.status(200).json(blogs);
   } catch (error) {
     next(new ErrorHandler(500, "Server Error: Unable to retrieve blog posts"));

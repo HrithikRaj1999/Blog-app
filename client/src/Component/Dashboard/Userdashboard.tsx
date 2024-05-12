@@ -9,12 +9,6 @@ const Userdashboard = () => {
       <ListGroup.Item action as={Link} to="/secure/dashboard/show-own-blog">
         Show Own Blog
       </ListGroup.Item>
-      <ListGroup.Item action as={Link} to="/edit-blog">
-        Edit Blog
-      </ListGroup.Item>
-      <ListGroup.Item action as={Link} to="/delete-blog">
-        Delete Blog
-      </ListGroup.Item>
     </>
   );
 };

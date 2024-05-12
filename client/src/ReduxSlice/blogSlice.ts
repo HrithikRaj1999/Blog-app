@@ -35,9 +35,8 @@ const blogSlice = createSlice({
     requestBlogStart: (state) => {
       state.status = "loading";
     },
-    requestBlogSuccess: (state, action: PayloadAction<Blog>) => {
+    requestBlogSuccess: (state) => {
       state.status = "succeeded";
-      state.blogs.push(action.payload);
     },
     requestBlogFailure: (state, action: PayloadAction<string>) => {
       state.status = "failed";

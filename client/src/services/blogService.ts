@@ -3,6 +3,8 @@ import { API_ROUTES } from "../Router/BlogRoute";
 import { Blog } from "../Types";
 import { AppDispatch } from "../store/store";
 import {
+  addBlog,
+  editBlog,
   requestBlogFailure,
   requestBlogStart,
   requestBlogSuccess,
@@ -17,9 +19,10 @@ export const createBlog =
       const response = await axios.post(API_ROUTES.CREATE_BLOG, blogData, {
         withCredentials: true,
       });
-      if (response.status === 201)
-        dispatch(requestBlogSuccess(response.data.blog));
-      else {
+      if (response.status === 201) {
+        dispatch(requestBlogSuccess());
+        dispatch(addBlog(response.data.blog));
+      } else {
         dispatch(requestBlogFailure("Failed to authenticate"));
       }
     } catch (error: any) {
@@ -32,17 +35,27 @@ export const createBlog =
   };
 
 // Update an existing blog
-export const updateBlog = async (id: string, blogData: Partial<Blog>) => {
-  try {
-    const response = await axios.patch(API_ROUTES.UPDATE_BLOG(id), blogData, {
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (error) {
-    console.error(`Error updating blog with ID ${id}:`, error);
-    throw error;
-  }
-};
+export const updateBlog =
+  (id: string, blogData: Partial<Blog>) => async (dispatch: AppDispatch) => {
+    dispatch(requestBlogStart());
+    try {
+      const response = await axios.patch(API_ROUTES.UPDATE_BLOG(id), blogData, {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        dispatch(requestBlogSuccess());
+        dispatch(editBlog(response.data.blog));
+      } else {
+        dispatch(requestBlogFailure("Failed to authenticate"));
+      }
+    } catch (error: any) {
+      console.error(`Error updating blog with ID ${id}:`, error);
+      dispatch(
+        requestFailure(error.response?.data?.message || "Network error")
+      );
+      throw error;
+    }
+  };
 
 // Delete a blog by ID
 export const deleteBlog = async (id: string) => {
