@@ -2,7 +2,10 @@
   "scripts": {
     "start:client": "cd client && npm start",
     "start:server": "cd server && npm run dev",
-    "dev": "concurrently \"npm run start:client\" \"npm run start:server\""
+    "install:client": "cd client && npm i",
+    "install:server": "cd server && npm i",
+    "dev": "concurrently \"npm run start:client\" \"npm run start:server\"",
+    "install": "concurrently \"npm run install:client\" \"npm run  install:server\""
   },
 
   "dependencies": {

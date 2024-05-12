@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { useEffect, useState } from "react";
-import { fetchUsers } from "../../ReduxSlice/userSlice";
+import { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import UserBlogs from "./UserBlogs";
 import DeleteConfirmation from "../Blog/DeleteConfirmation";
