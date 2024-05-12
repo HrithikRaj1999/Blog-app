@@ -1,13 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store/store";
-
-interface User {
-  _id: string;
-  name: string;
-  email: string;
-  role: "admin" | "user" | "super-admin";
-}
+import { User } from "../Types";
 
 interface UsersState {
   users: User[];
@@ -21,7 +15,6 @@ const initialState: UsersState = {
   error: null,
 };
 
-// Asynchronous thunk for fetching users
 export const fetchUsers = createAsyncThunk(
   "users/fetchUsers",
   async (_, { getState, rejectWithValue }) => {
@@ -33,7 +26,9 @@ export const fetchUsers = createAsyncThunk(
       try {
         const response = await axios.get<User[]>(
           `${process.env.REACT_APP_SERVER_URL}/user`,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+          }
         );
         return response.data;
       } catch (error: any) {
@@ -49,21 +44,47 @@ export const fetchUsers = createAsyncThunk(
 const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    requestUserStart: (state) => {
+      state.status = "loading";
+    },
+    requestUserSuccess: (state) => {
+      state.status = "succeeded";
+    },
+    requestUserFailure: (state, action: PayloadAction<string>) => {
+      state.status = "failed";
+      state.error = action.payload;
+    },
+    updateUser: (state, action: PayloadAction<User>) => {
+      const index = state.users.findIndex(
+        (user) => user._id === action.payload._id
+      );
+      if (index !== -1) {
+        state.users[index] = action.payload;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.users = action.payload;
         state.status = "succeeded";
+        state.users = action.payload;
       })
       .addCase(fetchUsers.rejected, (state, action) => {
-        state.error = action.payload as string;
         state.status = "failed";
+        state.error = action.payload as string;
       });
   },
 });
+
+export const {
+  requestUserStart,
+  requestUserSuccess,
+  requestUserFailure,
+  updateUser,
+} = usersSlice.actions;
 
 export default usersSlice.reducer;

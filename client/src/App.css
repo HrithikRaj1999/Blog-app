@@ -22,8 +22,28 @@
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
+.blog-author {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
 @media (max-width: 768px) {
   .blog-card {
     height: auto;
   }
+}
+.user-container {
+  position: relative;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+}
+.user-container::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #ccc; /* Divider color */
 }

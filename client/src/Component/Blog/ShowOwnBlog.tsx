@@ -12,7 +12,12 @@ const ShowOwnBlog = () => {
   const blogs = allBlogs.filter((blog) => blog.createdBy === userId);
   const handleEdit = (initData: Blog) =>
     navigate("/secure/dashboard/edit-blog", { state: initData });
-
+  if (!blogs.length)
+    return (
+      <Container >
+        <h1>No Blogs Found Please create one</h1>
+      </Container>
+    );
   return (
     <>
       <Container className="mt-3">

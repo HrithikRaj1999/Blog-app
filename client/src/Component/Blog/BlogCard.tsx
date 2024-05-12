@@ -37,7 +37,7 @@ const BlogCard = ({
         <Card className="blog-card" style={{ width: "100%" }}>
           <Card.Body>
             <Card.Title className="blog-title">{blog.heading}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">
+            <Card.Subtitle className="mb-2 text-muted blog-author">
               By {blog.author}
             </Card.Subtitle>
             <Card.Text className="blog-description">

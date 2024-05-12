@@ -7,9 +7,6 @@ const Admindashboard = () => {
         <ListGroup.Item action as={Link} to="admin/expose-all">
           Show All Users and there blogs
         </ListGroup.Item>
-        <ListGroup.Item action as={Link} to="admin/make-user-admin">
-          Make a User Admin
-        </ListGroup.Item>
       </ListGroup>
     </>
   );

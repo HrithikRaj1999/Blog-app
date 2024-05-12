@@ -11,7 +11,7 @@ export interface User {
   _id: string;
   name: string;
   email: string;
-  role: string;
+  role: "admin" | "user" | "super-admin";
 }
 export interface EditProfileForm extends Partial<User> {
   password: string;

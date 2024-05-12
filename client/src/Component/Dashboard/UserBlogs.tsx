@@ -5,10 +5,12 @@ import { SetStateAction } from "react";
 
 const UserBlogs = ({
   userId,
+  disabled = false,
   setIdToDelete,
   setShowDeleteModal,
 }: {
   userId: string;
+  disabled: boolean;
   setIdToDelete: React.Dispatch<SetStateAction<string>>;
   setShowDeleteModal: React.Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -43,6 +45,7 @@ const UserBlogs = ({
                   setIdToDelete(blog._id!);
                   setShowDeleteModal(true);
                 }}
+                disabled={disabled}
                 className="mt-2 "
                 variant="danger"
                 size="sm"

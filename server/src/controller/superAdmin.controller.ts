@@ -10,10 +10,10 @@ export const enableAdmin = async (
 ) => {
   try {
     const { userId } = req.params;
-
+    const { role } = req.query;
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
-      { role: "admin" },
+      { role },
       { new: true }
     );
 
@@ -21,7 +21,9 @@ export const enableAdmin = async (
       return res.status(404).send({ message: "User not found" });
     }
 
-    res.status(200).send({ message: "User set to admin successful" });
+    return res
+      .status(200)
+      .send({ message: `User set to ${role} successful`, updatedUser });
   } catch (error) {
     next(error);
   }
