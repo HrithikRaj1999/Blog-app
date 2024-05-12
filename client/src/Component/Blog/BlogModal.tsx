@@ -13,7 +13,7 @@ const BlogModal: React.FC<BlogModalProps> = ({ show, onHide, blog }) => {
   if (!blog) return null;
 
   return (
-    <Modal size={"lg"} show={show} onHide={onHide} centered>
+    <Modal show={show} onHide={onHide} centered dialogClassName="custom-modal">
       <Modal.Header closeButton>
         <Modal.Title>{blog.heading}</Modal.Title>
       </Modal.Header>
@@ -22,7 +22,7 @@ const BlogModal: React.FC<BlogModalProps> = ({ show, onHide, blog }) => {
         <div className="blog-content mb-4">{blog.description}</div>
         <div className="text-muted small mt-2">
           Created: {new Date(blog.createdAt || new Date()).toLocaleDateString()}{" "}
-          | Updated:
+          | Updated:{" "}
           {new Date(blog.updatedAt || new Date()).toLocaleDateString()}
         </div>
       </Modal.Body>

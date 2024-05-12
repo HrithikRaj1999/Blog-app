@@ -1,4 +1,4 @@
-import { Row, Col, Card, Button } from "react-bootstrap";
+import { Row, Col, Card, Button, Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { SetStateAction } from "react";
@@ -20,6 +20,7 @@ const UserBlogs = ({
   const blogs = useSelector((state: RootState) => state.blogs.blogs).filter(
     (blog) => blog.createdBy === userId
   );
+  if (!blogs.length) return <h1>No Blogs</h1>;
   return (
     <Row>
       {blogs.map((blog) => (

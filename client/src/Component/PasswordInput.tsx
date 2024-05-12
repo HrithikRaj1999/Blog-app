@@ -35,12 +35,8 @@ const PasswordInputWithToggle: FC<PasswordInputWithToggleProps> = ({
           onChange={handleChange}
           required
         />
-        <Button variant="outline-success" onClick={togglePasswordVisibility}>
-          {passwordVisible ? (
-            <EyeOff  size={18} />
-          ) : (
-            <Eye  size={18} />
-          )}
+        <Button onClick={togglePasswordVisibility}>
+          {passwordVisible ? <EyeOff size={18} /> : <Eye size={18} />}
         </Button>
       </InputGroup>
     </Form.Group>

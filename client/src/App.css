@@ -47,3 +47,19 @@
   height: 1px;
   background-color: #ccc; /* Divider color */
 }
+.custom-modal.modal-dialog {
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  max-width: 90%; /* Prevents exceeding the viewport width */
+  max-height: 90%; /* Prevents exceeding the viewport height */
+  margin: 20; /* Removes margin */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-modal .modal-content {
+  height: 100%; /* Ensures that modal content fills the dialog */
+  border: 0; /* Optional: removes border */
+  border-radius: 0; /* Optional: removes rounded corners */
+}
